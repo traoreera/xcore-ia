@@ -1,0 +1,29 @@
+# xcore_ai.yaml — Configuration de XCore AI
+# Copie ce fichier à la racine de ton projet et adapte les chemins.
+
+# ── Chemins ────────────────────────────────────────────────
+framework_path: "./xcore/xcore"     # Dossier racine de ton framework XCore
+vector_db_path: "./data/vector_db"           # Où stocker l'index ChromaDB
+collection_name: "xcore"
+history_path: "./history/xcore_ai_history.json"
+
+# ── Modèles ────────────────────────────────────────────────
+llm_model: "novaforgeai/deepseek-coder:6.7b-optimized"        # Modèle Ollama
+embedding_model: "all-MiniLM-L6-v2"    # SentenceTransformers
+ollama_base_url: "http://localhost:11434"
+
+# ── RAG ────────────────────────────────────────────────────
+chunk_size: 800          # Taille des chunks (caractères)
+chunk_overlap: 100       # Chevauchement entre chunks
+retrieval_k: 6           # Nombre de chunks récupérés par requête
+retrieval_score_threshold: 0.35  # Seuil de similarité (0=strict, 1=tout)
+
+# ── LLM ────────────────────────────────────────────────────
+llm_temperature: 0.5     # 0.0=déterministe, 1.0=créatif
+llm_max_tokens: 2048
+llm_timeout: 1200         # Timeout en secondes
+
+# ── Interface ──────────────────────────────────────────────
+show_sources: true        # Affiche les fichiers sources utilisés
+show_retrieval_score: false
+max_history: 20           # Nombre de tours de conversation mémorisés

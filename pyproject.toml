@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "xcore-ai"
+version = "1.0.0"
+description = "Copilote IA pour le framework XCore — RAG + DeepSeek Coder via Ollama"
+authors = [{ name = "XCore Team" }]
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+
+dependencies = [
+    "langchain>=0.2.0",
+    "langchain-community>=0.2.0",
+    "chromadb>=0.5.0",
+    "sentence-transformers>=3.0.0",
+    "requests>=2.31.0",
+    "pyyaml>=6.0",
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.29.0",
+    "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "black", "ruff"]
+
+[project.scripts]
+xcore-ai     = "xcore_ai.cli:main"
+xcore-ai-web = "web.server:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["xcore_ai*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I"]
