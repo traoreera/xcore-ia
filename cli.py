@@ -72,7 +72,7 @@ def _banner():
    ██╔██╗ ██║     ██║   ██║██╔══██╗██╔══╝      ██╔══██║██║
   ██╔╝ ██╗╚██████╗╚██████╔╝██║  ██║███████╗    ██║  ██║██║
   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝    ╚═╝  ╚═╝╚═╝
-{C.RESET}{C.DIM}  Copilote IA pour le framework XCore — DeepSeek Coder 6.7B{C.RESET}
+{C.RESET}{C.DIM}  Copilote IA pour le framework XCore —{C.RESET}
 """
     print(banner)
 
@@ -352,7 +352,7 @@ def cmd_dataset(config, args):
         return
 
     if subcommand == "lora":
-        from .dataset.lora_config import generate_config
+        from dataset.lora_config import generate_config
         _print("\n  Génération de la config LoRA Axolotl\n", C.CYAN, bold=True)
         generate_config(
             dataset_path=getattr(args, "dataset_path", "dataset/xcore_train.jsonl"),

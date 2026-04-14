@@ -5,11 +5,20 @@ Construit un dataset d'entraînement pour le fine-tuning LoRA
 de DeepSeek Coder sur le framework XCore.
 
 Format du dataset :
+{"conversations": [
     {
-        "instruction": "Create a plugin with database injection",
-        "input":       "",          # contexte optionnel
-        "output":      "..."        # code XCore attendu
+        "role": "system", 
+        "content": ...
+    },
+    {
+        "role": "user", 
+        "content": ...}, 
+    
+    {   
+        "role": "assistant", 
+        "content": ...
     }
+
 
 Sources automatiques :
     1. Fichiers Python du framework (patterns extraits par AST)
@@ -22,10 +31,18 @@ import ast
 import json
 import re
 from pathlib import Path
-from typing import Generator
 
 from config import XCoreAIConfig
 from indexer import load_source_files
+
+
+# ──────────────────────────────────────────────────────────
+# System prompt XCore
+# ──────────────────────────────────────────────────────────
+
+XCORE_SYSTEM_PROMPT = """You are an expert developer of the XCore Python framework.
+XCore uses decorator-based dependency injection: @plugin for plugins, @service for singleton services.
+Always write idiomatic XCore code with proper type hints and docstrings."""
 
 
 # ──────────────────────────────────────────────────────────
@@ -200,8 +217,10 @@ class DatasetBuilder:
     # ── Exemples manuels ──────────────────────────────────
     def _load_examples(self, examples_dir: str) -> list[dict]:
         """
-        Charge les exemples manuels depuis examples/*.jsonl ou examples/*.json
-        Format attendu : {"instruction": "...", "output": "..."}
+        Charge les exemples manuels depuis examples/*.jsonl ou examples/*.json.
+        Supporte les deux formats : Alpaca et Conversations.
+        Format Alpaca  : {"instruction": "...", "output": "..."}
+        Format Conversations : {"conversations": [{...}, {...}, {...}]}
         """
         pairs = []
         root = Path(examples_dir)
@@ -235,7 +254,20 @@ class DatasetBuilder:
         seen = set()
         unique = []
         for p in pairs:
-            key = (p.get("instruction", "").lower().strip(), p.get("output", "")[:100])
+            # Support des deux formats
+            if "conversations" in p:
+                msgs = p["conversations"]
+                instruction = next(
+                    (m["content"] for m in msgs if m["role"] == "user"), ""
+                )
+                output = next(
+                    (m["content"] for m in msgs if m["role"] == "assistant"), ""
+                )
+            else:
+                instruction = p.get("instruction", "")
+                output = p.get("output", "")
+
+            key = (instruction.lower().strip(), output[:100])
             if key not in seen:
                 seen.add(key)
                 unique.append(p)
@@ -246,8 +278,19 @@ class DatasetBuilder:
     def _filter_quality(pairs: list[dict]) -> list[dict]:
         good = []
         for p in pairs:
-            instruction = p.get("instruction", "")
-            output = p.get("output", "")
+            # Support des deux formats pendant la transition
+            if "conversations" in p:
+                msgs = p["conversations"]
+                instruction = next(
+                    (m["content"] for m in msgs if m["role"] == "user"), ""
+                )
+                output = next(
+                    (m["content"] for m in msgs if m["role"] == "assistant"), ""
+                )
+            else:
+                instruction = p.get("instruction", "")
+                output = p.get("output", "")
+
             # Filtre les paires trop courtes ou sans code Python réel
             if (
                 len(instruction) >= 10
@@ -256,6 +299,36 @@ class DatasetBuilder:
             ):
                 good.append(p)
         return good
+
+    # ── Conversion vers le format Conversations ───────────
+    @staticmethod
+    def _to_conversations(pairs: list[dict]) -> list[dict]:
+        """
+        Convertit toutes les paires vers le format Conversations unifié.
+        Les paires déjà au bon format sont conservées telles quelles.
+        """
+        final = []
+        for p in pairs:
+            # Déjà au format Conversations → on s'assure juste que system est présent
+            if "conversations" in p:
+                msgs = p["conversations"]
+                has_system = any(m["role"] == "system" for m in msgs)
+                if not has_system:
+                    msgs = [{"role": "system", "content": XCORE_SYSTEM_PROMPT}] + msgs
+                final.append({"conversations": msgs})
+            # Format Alpaca → conversion
+            else:
+                user_content = p.get("instruction", "")
+                if p.get("input", "").strip():
+                    user_content += f"\n\n{p['input']}"
+                final.append({
+                    "conversations": [
+                        {"role": "system",    "content": XCORE_SYSTEM_PROMPT},
+                        {"role": "user",      "content": user_content},
+                        {"role": "assistant", "content": p.get("output", "")},
+                    ]
+                })
+        return final
 
     # ── Build complet ─────────────────────────────────────
     def build(
@@ -266,7 +339,7 @@ class DatasetBuilder:
         augment_top_n: int = 20,
     ) -> dict:
         """
-        Construit et sauvegarde le dataset.
+        Construit et sauvegarde le dataset au format Conversations.
 
         Args:
             output_path:   Fichier de sortie (.jsonl)
@@ -293,7 +366,15 @@ class DatasetBuilder:
             print(f"  [dataset] Augmentation LLM sur {augment_top_n} paires...")
             top_pairs = all_pairs[:augment_top_n]
             for pair in top_pairs:
-                code = pair.get("output", "")
+                # Récupère le code selon le format de la paire
+                if "conversations" in pair:
+                    msgs = pair["conversations"]
+                    code = next(
+                        (m["content"] for m in msgs if m["role"] == "assistant"), ""
+                    )
+                else:
+                    code = pair.get("output", "")
+
                 variants = self.augmenter.augment(code)
                 for v in variants:
                     all_pairs.append({
@@ -308,23 +389,17 @@ class DatasetBuilder:
         all_pairs = self._deduplicate(all_pairs)
         all_pairs = self._filter_quality(all_pairs)
 
-        # Format final : Alpaca (compatible avec Axolotl/LoRA)
-        final = []
-        for p in all_pairs:
-            final.append({
-                "instruction": p.get("instruction", ""),
-                "input": p.get("input", ""),
-                "output": p.get("output", ""),
-            })
+        # Conversion vers le format Conversations unifié
+        final = self._to_conversations(all_pairs)
 
-        # Sauvegarde
+        # Sauvegarde JSONL
         output = Path(output_path)
         output.parent.mkdir(parents=True, exist_ok=True)
         with open(output, "w", encoding="utf-8") as f:
             for item in final:
                 f.write(json.dumps(item, ensure_ascii=False) + "\n")
 
-        # Sauvegarde aussi en JSON lisible
+        # Sauvegarde JSON lisible
         json_path = output.with_suffix(".json")
         with open(json_path, "w", encoding="utf-8") as f:
             json.dump(final, f, indent=2, ensure_ascii=False)
@@ -345,7 +420,7 @@ class DatasetBuilder:
 
     # ── Preview ───────────────────────────────────────────
     def preview(self, n: int = 5) -> list[dict]:
-        """Retourne les n premières paires sans sauvegarder."""
+        """Retourne les n premières paires converties sans sauvegarder."""
         pairs = self._mine_framework()
         pairs = self._filter_quality(pairs)
-        return pairs[:n]
+        return self._to_conversations(pairs[:n])

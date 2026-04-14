@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.4.1
 # Built for x86_64-unknown-linux-gnu
 # Copyright (C) 1988-2023 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Mar 22 09:59:43 2026
+# Make data base, printed on Tue Apr 14 06:51:24 2026
 
 # Variables
 
@@ -19,9 +21,9 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-PULSE_SERVER = unix:/run/flatpak/pulse/native
+GTK_RC_FILES = /etc/gtk/gtkrc:/home/eliezer/.gtkrc:/home/eliezer/.config/gtkrc
 # environment
-GJS_DEBUG_OUTPUT = stderr
+PULSE_SERVER = unix:/run/flatpak/pulse/native
 # environment
 SBX_CHROME_API_RQ = 1
 # environment
@@ -30,16 +32,18 @@ VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
 VSCODE_CWD = /home/eliezer
 # makefile (from 'makefile', line 34)
 REPORT_DIR = $(CURDIR)/reports
-# environment
-GDM_LANG = fr_FR.UTF-8
 # default
 MAKE_COMMAND := make
 # environment
 APPLICATIONINSIGHTS_CONFIGURATION_CONTENT = {}
 # makefile (from 'makefile', line 4)
 PROJECT_PATH_APP := /home/eliezer/devs/xcore-ia/core
+# environment
+OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT = true
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
+# environment
+COPILOT_OTEL_EXPORTER_TYPE = file
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -61,17 +65,19 @@ XDG_DATA_DIRS = /app/share:/usr/share:/usr/share/runtime/share:/run/host/user-sh
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/eliezer/.var/app/com.visualstudio.code/config/Code/CachedData/07ff9d6178ede9a1bd12ad3399074d726ebe6e43
+VSCODE_CODE_CACHE_PATH = /home/eliezer/.var/app/com.visualstudio.code/config/Code/CachedData/41dd792b5e652393e7787322889ed5fdc58bd75b
+# environment
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.QQZJM3
+XAUTHORITY = /run/user/1000/xauth_wDZPLE
 # default
 .LOADED := 
 # default
 .INCLUDE_DIRS := /usr/include
 # environment
-MEMORY_PRESSURE_WATCH = /sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure
+MEMORY_PRESSURE_WATCH = /sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/plasma-plasmashell.service/memory.pressure
 # environment
 ALSA_CONFIG_DIR = /usr/share/alsa
 # makefile
@@ -82,28 +88,30 @@ LOGS_FILE := /home/eliezer/devs/xcore-ia/logs/dev.log
 CURDIR := /home/eliezer/devs/xcore-ia
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+VSCODE_L10N_BUNDLE_LOCATION = file:///home/eliezer/.var/app/com.visualstudio.code/data/vscode/extensions/ms-ceintl.vscode-language-pack-fr-1.110.2026041319/translations/extensions/vscode.json-language-features.i18n.json
+# environment
+ICEAUTHORITY = /run/user/1000/iceauth_YtByJN
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
 ZYPAK_LIB = /app/bin/../lib
 # environment
 MFLAGS = -pqrR
-# environment
-SSH_AUTH_SOCK = /run/flatpak/ssh-auth
 # default
 .SHELLFLAGS := -c
 # environment
 WAYLAND_DISPLAY = wayland-0
 # environment
 XDG_CONFIG_DIRS = /app/etc/xdg:/etc/xdg
+# environment
+COPILOT_OTEL_FILE_EXPORTER_PATH = /dev/null
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
 ALSA_CONFIG_PATH = /usr/share/alsa/alsa-flatpak.conf
 # environment
-QT_IM_MODULES = wayland;ibus
-# environment
-XDG_SESSION_DESKTOP = gnome
+XDG_SESSION_DESKTOP = KDE
 # makefile (from 'makefile', line 1)
 MAKEFILE_LIST := makefile
 # environment
@@ -122,6 +130,8 @@ PYTHONUSERBASE = /var/data/python
 AT_SPI_BUS_ADDRESS = unix:path=/run/flatpak/at-spi-bus
 # environment
 XDG_DATA_HOME = /home/eliezer/.var/app/com.visualstudio.code/data
+# environment
+SESSION_MANAGER = local/archlinux:@/tmp/.ICE-unix/1002,unix/archlinux:/tmp/.ICE-unix/1002
 # automatic
 *F = $(notdir $*)
 # environment
@@ -131,7 +141,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/flatpak/bus
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
-VSCODE_NLS_CONFIG = {"userLocale":"fr","osLocale":"fr-fr","resolvedLanguage":"fr","defaultMessagesFile":"/app/extra/vscode/resources/app/out/nls.messages.json","languagePack":{"translationsConfigFile":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/edd3b4ba60829537b7c8dc90c449491a.fr/tcf.json","messagesFile":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/edd3b4ba60829537b7c8dc90c449491a.fr/07ff9d6178ede9a1bd12ad3399074d726ebe6e43/nls.messages.json","corruptMarkerFile":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/edd3b4ba60829537b7c8dc90c449491a.fr/corrupted.info"},"locale":"fr","availableLanguages":{"*":"fr"},"_languagePackId":"edd3b4ba60829537b7c8dc90c449491a.fr","_languagePackSupport":true,"_translationsConfigFile":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/edd3b4ba60829537b7c8dc90c449491a.fr/tcf.json","_cacheRoot":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/edd3b4ba60829537b7c8dc90c449491a.fr","_resolvedLanguagePackCoreLocation":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/edd3b4ba60829537b7c8dc90c449491a.fr/07ff9d6178ede9a1bd12ad3399074d726ebe6e43","_corruptedFile":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/edd3b4ba60829537b7c8dc90c449491a.fr/corrupted.info"}
+VSCODE_NLS_CONFIG = {"userLocale":"fr","osLocale":"fr-fr","resolvedLanguage":"fr","defaultMessagesFile":"/app/extra/vscode/resources/app/out/nls.messages.json","languagePack":{"translationsConfigFile":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/8233596fc66693f46bb78f53ebeb2072.fr/tcf.json","messagesFile":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/8233596fc66693f46bb78f53ebeb2072.fr/41dd792b5e652393e7787322889ed5fdc58bd75b/nls.messages.json","corruptMarkerFile":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/8233596fc66693f46bb78f53ebeb2072.fr/corrupted.info"},"locale":"fr","availableLanguages":{"*":"fr"},"_languagePackId":"8233596fc66693f46bb78f53ebeb2072.fr","_languagePackSupport":true,"_translationsConfigFile":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/8233596fc66693f46bb78f53ebeb2072.fr/tcf.json","_cacheRoot":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/8233596fc66693f46bb78f53ebeb2072.fr","_resolvedLanguagePackCoreLocation":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/8233596fc66693f46bb78f53ebeb2072.fr/41dd792b5e652393e7787322889ed5fdc58bd75b","_corruptedFile":"/home/eliezer/.var/app/com.visualstudio.code/config/Code/clp/8233596fc66693f46bb78f53ebeb2072.fr/corrupted.info"}
 # environment
 __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS = /etc/egl/egl_external_platform.d:/usr/lib/x86_64-linux-gnu/GL/egl/egl_external_platform.d:/usr/share/egl/egl_external_platform.d
 # makefile (from 'makefile', line 17)
@@ -143,11 +153,7 @@ SHELL = /bin/sh
 # default
 MAKECMDGOALS := all
 # environment
-XMODIFIERS = @im=ibus
-# environment
 LD_LIBRARY_PATH = /app/lib
-# environment
-GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
 SANDBOX_LD_LIBRARY_PATH = /app/lib
 # environment
@@ -173,26 +179,28 @@ APPLICATION_INSIGHTS_NO_STATSBEAT = true
 # environment
 XDG_CONFIG_HOME = /home/eliezer/.var/app/com.visualstudio.code/config
 # environment
-INVOCATION_ID = 5d8f8ed36c4a4286874a0a457efe65bd
- 
-make: *** No rule to make target 'all'.  Stop.
-
+INVOCATION_ID = c9b3b9fe4695486fa1f313dd9db02fd2
 # makefile (from 'makefile', line 36)
+ 
 AUTOMATE_CMD = all
 # environment
-USERNAME = eliezer
-# environment
-GNOME_SETUP_DISPLAY = :1
+_JAVA_AWT_WM_NONREPARENTING = 1
 # automatic
 ?F = $(notdir $?)
+# environment
+KDE_APPLICATIONS_AS_SCOPE = 1
 # makefile (from 'makefile', line 12)
 NAME = module.py              
 # environment
-XDG_CURRENT_DESKTOP = GNOME
+XDG_SEAT = seat0
+# environment
+XDG_CURRENT_DESKTOP = KDE
 # automatic
 +F = $(notdir $+)
 # environment
-DESKTOP_SESSION = gnome
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+DESKTOP_SESSION = plasma
 # environment
 GST_PLUGIN_SYSTEM_PATH = /app/lib/gstreamer-1.0:/usr/lib/extensions/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/codecs-extra/lib/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/gstreamer-1.0
 # 'override' directive
@@ -202,27 +210,29 @@ LOGNAME = eliezer
 # environment
 container = flatpak
 # environment
-GIO_LAUNCHED_DESKTOP_FILE = /var/lib/flatpak/exports/share/applications/com.visualstudio.code.desktop
+XDG_VTNR = 1
 # makefile
 .DEFAULT_GOAL := help
 # environment
-SYSTEMD_EXEC_PID = 2061
+SYSTEMD_EXEC_PID = 1072
 # environment
 NPM_CONFIG_GLOBALCONFIG = /app/etc/npmrc
 # environment
 USER = eliezer
 # default
 MAKE_VERSION := 4.4.1
+# environment
+KDE_SESSION_UID = 1000
 # makefile (from 'makefile', line 5)
 PROJECT_PATH := /home/eliezer/devs/xcore-ia
 # 'override' directive
 .SHELLSTATUS := 0
 # environment
-MANAGERPID = 1903
+MANAGERPID = 751
 # environment
 DEBUGINFOD_URLS = https://debuginfod.archlinux.org 
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 60926
+XKB_DEFAULT_LAYOUT = fr
 # environment
 _ = /usr/bin/make
 # environment
@@ -236,21 +246,25 @@ FC_FONTATIONS = 1
 # makefile (from 'makefile', line 11)
 TO = $(shell pwd)/backgroundtask           
 # environment
-JOURNAL_STREAM = 9:16817
+COPILOT_OTEL_ENABLED = true
+# environment
+JOURNAL_STREAM = 9:18498
 # environment
 VSCODE_DOTNET_INSTALL_TOOL_ORIGINAL_HOME = /home/eliezer
 # environment
 XDG_SESSION_CLASS = user
 # environment
-HOME = /home/eliezer
+GTK2_RC_FILES = /etc/gtk-2.0/gtkrc:/home/eliezer/.gtkrc-2.0:/home/eliezer/.config/gtkrc-2.0
 # environment
-QT_IM_MODULE = ibus
+HOME = /home/eliezer
 # makefile (from 'makefile', line 10)
 FROM = /path/to/module.py     
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1000/vscode-bc48e1b0-1.11-main.sock
+# environment
+XDG_SESSION_ID = 2
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -268,9 +282,13 @@ VSCODE_CLI = 1
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
-MANAGERPIDFDID = 1904
+MANAGERPIDFDID = 752
+# environment
+DEBUG = release
 # makefile (from 'makefile', line 15)
 PLUGIN_NAME = myplugin
+# environment
+KDE_SESSION_VERSION = 6
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs notintermediate shell-export archives jobserver jobserver-fifo output-sync check-symlink load
 # environment
@@ -278,15 +296,17 @@ FLATPAK_ID = com.visualstudio.code
 # makefile (from 'makefile', line 16)
 AUTHOR = traoreera
 # environment
-XDG_MENU_PREFIX = gnome-
+KDE_FULL_SESSION = true
+# environment
+XDG_MENU_PREFIX = plasma-
 # environment
 VSCODE_ESM_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 ZYPAK_BIN = /app/bin
 # environment
-GDMSESSION = gnome
+QT_WAYLAND_RECONNECT = 1
 # variable set hash-table stats:
-# Load=136/1024=13%, Rehash=0, Collisions=13/184=7%
+# Load=146/1024=14%, Rehash=0, Collisions=15/194=8%
 
 # Pattern-specific Variable Values
 
@@ -294,9 +314,9 @@ GDMSESSION = gnome
 
 # Directories
 
-# . (device 47, inode 364217): 26 files, no impossibilities.
+# . (device 38, inode 364217): 29 files, no impossibilities.
 
-# 26 files, no impossibilities in 1 directories.
+# 29 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -365,10 +385,10 @@ auto-docs:
 
 start:
 #  Phony target (prerequisite of .PHONY).
- 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 #  recipe to execute (from 'makefile', line 244):
 	@./script/cmd.sh start
 
@@ -798,7 +818,6 @@ logs-live:
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 278):
 	@echo "🔴 Logs en temps réel (Ctrl+C pour arrêter)..."
- 
 	@if [ -f "$(LOGS_FILE)" ]; then \
 		tail -f $(LOGS_FILE); \
 	else \
@@ -832,6 +851,7 @@ logs-troubleshoot:
 	fi
 	@echo ""
 	@echo "💡 SUGGESTIONS:"
+ 
 	@echo "- Si beaucoup d'erreurs → make logs-error"
 	@echo "- Si problème de connexion → make logs-auth"
 	@echo "- Si lenteur → make logs-performance-check"
@@ -1059,7 +1079,6 @@ auto-security:
 	@echo "[INFO] - $(REPORT_DIR)/security-bandit.stderr.log"
 
 init:
- 
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
@@ -1082,6 +1101,7 @@ all:
 
 link:
 #  Phony target (prerequisite of .PHONY).
+ 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -1273,7 +1293,6 @@ logs-comparison:
 #  recipe to execute (from 'makefile', line 838):
 	@echo "🔄 COMPARAISON DES LOGS"
 	@echo "======================"
- 
 	@echo ""
 	@if [ -f "$(LOGS_FILE).old" ] && [ -f "$(LOGS_FILE)" ]; then \
 		OLD_LINES=$$(wc -l < $(LOGS_FILE).old); \
@@ -1348,6 +1367,7 @@ lint-preview:
 	@poetry run autopep8 --diff --recursive --exclude=alembic,static,__pycache__ . | head -50
 	@echo ""
 	@echo "👀 Prévisualisation du formatage black:"
+ 
 	@poetry run black --diff . --exclude="(alembic|static|__pycache__)" | head -30
 
 # Not a target:
@@ -1505,7 +1525,6 @@ logs-stats:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
- 
 #  recipe to execute (from 'makefile', line 385):
 	@echo "📊 Statistiques des logs..."
 	@if [ -f "$(LOGS_FILE)" ]; then \
@@ -1585,6 +1604,7 @@ docker-stop:
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 1053):
 	@echo "🛑 Arrêt des conteneurs Docker..."
+ 
 	@sudo docker compose down
 
 logs-email-monitoring:
@@ -1697,12 +1717,12 @@ logs-debug:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 114 / storage = 1249 B / avg = 10 B
-# current buf: size = 8162 B / used = 1249 B / count = 114 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 117 / storage = 1277 B / avg = 10 B
+# current buf: size = 8162 B / used = 1277 B / count = 117 / avg = 10 B
 
-# strcache performance: lookups = 243 / hit rate = 53%
+# strcache performance: lookups = 246 / hit rate = 52%
 # hash-table stats:
-# Load=114/8192=1%, Rehash=0, Collisions=3/243=1%
-# Finished Make data base on Sun Mar 22 09:59:44 2026
+# Load=117/8192=1%, Rehash=0, Collisions=3/246=1%
+# Finished Make data base on Tue Apr 14 06:51:24 2026
 
  
